@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "860525100619",
+    "firebase_url": "https://worldcup-soccer-2018.firebaseio.com",
+    "project_id": "worldcup-soccer-2018",
+    "storage_bucket": "worldcup-soccer-2018.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860525100619:android:03aa89dc8e5dc687",
+        "android_client_info": {
+          "package_name": "com.bluetag.wc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860525100619-h0lbcp7smtgkoqnihpt6f4rpi13r2o1q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bluetag.wc",
+            "certificate_hash": "9201fa0e9e90d7d38db6b51fb1dff9d0139d1d63"
+          }
+        },
+        {
+          "client_id": "860525100619-1m1kkvr43gqa4r6bto4pt80cock4dejb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bluetag.wc",
+            "certificate_hash": "a9306056f1894906e00c1a45a6e3670d3bce114b"
+          }
+        },
+        {
+          "client_id": "860525100619-p63nqc07vbhd8mup45hi2k72jhs67oqq.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "860525100619-p63nqc07vbhd8mup45hi2k72jhs67oqq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8we_YvO493XQoj8YjrbMyDDykcqSDajk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860525100619-p63nqc07vbhd8mup45hi2k72jhs67oqq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="isTablet">true</bool>
+    <dimen name="text_size">22sp</dimen>
+    <!--Main screen dimens-->
+    <dimen name="main_screen_recycler_size">120dp</dimen>
+
+    <!--past winner detail image-->
+    <dimen name="stadium_name_text_size">24sp</dimen>
+
+    <!--past winner detail image-->
+    <dimen name="past_winner_list_recycler_image_size">120dp</dimen>
+    <dimen name="past_winner_detail_recycler_image_size">120dp</dimen>
+    <dimen name="score_text_size">20sp</dimen>
+</resources>

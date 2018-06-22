@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/TVTitle"
+        android:text="@string/today_s_match_title"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="RelativeOverlap" />
+
+    <TextView
+        android:id="@+id/TVDate"
+        android:textStyle="bold"
+        tools:text="@string/fri_15_05_2018_10_00_pm_test"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        tools:ignore="RelativeOverlap" />
+
+    <TextView
+        android:id="@+id/TVMiddleText"
+        android:layout_below="@id/TVDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/vs_test"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/TVTeam1"
+        android:layout_below="@id/TVDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/russia_test"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/TVTeam2"
+        android:layout_below="@id/TVDate"
+        android:padding="5dp"
+        android:text="@string/saudi_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
+
+    <ImageView
+        android:id="@+id/imgTeam1"
+        android:layout_below="@id/TVDate"
+        android:src="@drawable/ru"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_toLeftOf="@id/TVMiddleText"
+        android:layout_toStartOf="@id/TVMiddleText"
+        android:layout_centerVertical="true"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/imgTeam2"
+        android:layout_below="@id/TVDate"
+        android:src="@drawable/sa"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_toRightOf="@id/TVMiddleText"
+        android:layout_toEndOf="@id/TVMiddleText"
+        android:layout_centerVertical="true"
+        tools:ignore="ContentDescription" />
+
+</RelativeLayout>

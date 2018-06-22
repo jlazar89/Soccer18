@@ -1,0 +1,36 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="app_bar_height">400dp</dimen>
+    <dimen name="item_width">300dp</dimen>
+
+    <dimen name="text_size">18sp</dimen>
+    <dimen name="half_padding">4dp</dimen>
+    <dimen name="standard_padding">8dp</dimen>
+    <dimen name="cardview_padding">20dp</dimen>
+
+    <dimen name="card_height">250dip</dimen>
+
+    <dimen name="rss_title_text_size">12sp</dimen>
+    <dimen name="rss_date_text_size">10sp</dimen>
+
+
+    <dimen name="textsize">17sp</dimen>
+
+    <bool name="isTablet">false</bool>
+
+    <!--Main screen dimens-->
+    <dimen name="main_screen_recycler_size">70dp</dimen>
+
+    <!--past winner detail image-->
+    <dimen name="stadium_name_text_size">20sp</dimen>
+
+    <!--past winner detail image-->
+    <dimen name="past_winner_list_recycler_image_size">80dp</dimen>
+    <dimen name="past_winner_detail_recycler_image_size">80dp</dimen>
+    <dimen name="score_text_size">16sp</dimen>
+</resources>

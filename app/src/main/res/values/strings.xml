@@ -1,0 +1,138 @@
+<resources>
+    <string name="app_name">World cup Soccer 2018</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
+
+    <string name="no_internet_connection">No internet connection!</string>
+    <string name="feature_coming_soon">Feature Coming Soon</string>
+
+    <!--Side Menu-->
+    <string name="menu_header_groups">Groups and Schedules</string>
+    <string name="menu_groups_groups">Groups</string>
+    <string name="menu_live_scores">Live Scores</string>
+    <string name="menu_groups_schedules">Schedules</string>
+    <string name="menu_header_extras">Extras</string>
+    <string name="menu_extras_stadiums">Stadiums</string>
+    <string name="menu_extras_mascot">Mascot</string>
+    <string name="menu_extras_past_winners">Past Winners</string>
+    <string name="menu_header_media">Media</string>
+    <string name="menu_media_news">News</string>
+    <string name="menu_media_photos">Photos</string>
+    <string name="menu_media_videos">Videos</string>
+
+
+    <!--Groups-->
+    <string name="title_group_list">Groups</string>
+    <!--Stadium-->
+    <string name="country_name">Nigeria</string>
+    <string name="title_stadium_list">Stadiums</string>
+    <string name="title_stadium_detail">Stadium Detail</string>
+    <string name="stadium_name">Name :</string>
+    <string name="stadium_host_city">Host city :</string>
+    <string name="stadium_location">Location :</string>
+    <string name="stadium_capacity">Capacity :</string>
+    <string name="read_more">Read More</string>
+
+    <!--Stages-->
+    <string name="title_stages_list">Schedules</string>
+
+    <!--Browser-->
+    <string name="action_back">Back</string>
+    <string name="action_forward">Forward</string>
+    <string name="action_bookmark">Bookmark</string>
+
+    <!--Mascot-->
+    <string name="mascot_name">Zabivaka</string>
+    <string name="mascot_meaning">Zabivaka™ means “the one who scores” in Russian, a very suitable name for this wolf who radiates fun, charm and confidence.</string>
+    <string name="mascot_detail_url">http://www.fifa.com/worldcup/organisation/mascot/index.html</string>
+    <string name="mascot_image_url">http://img.fifa.com/mm/photo/tournament/mascot/02/84/55/10/2845510_full-lnd.jpg</string>
+
+    <!--Past WInners-->
+    <string name="title_past_winners">Past Winners</string>
+
+    <!--Past WInners Details-->
+    <string name="title_scorers">Scorers</string>
+    <string name="title_host">Host</string>
+    <string name="title_host_country">Country :</string>
+    <string name="title_host_stadium">Stadium :</string>
+    <string name="label_golden_ball">Golden Ball</string>
+    <string name="label_golden_boot">Golden Boot</string>
+    <string name="label_golden_glove">Golden Glove</string>
+    <string name="label_goalkeeper">Best GoalKeeper</string>
+
+    <!--Rss Feed-->
+    <string name="title_rss_feed_news">News</string>
+    <string name="title_rss_feed_photos">Photos</string>
+    <string name="title_rss_feed_videos">Videos</string>
+
+    <!--Shared Elements Transitions-->
+    <string name="transition_name_stadium">transition_name_stadium</string>
+
+    <string-array name="rss_feeds">
+        <item>http://www.fifa.com/worldcup/news/rss.xml</item>
+        <item>http://www.fifa.com/worldcup/photos/rss.xml</item>
+        <item>http://www.fifa.com/worldcup/videos/rss.xml</item>
+    </string-array>
+
+
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="home_nav">Home</string>
+    <string name="settings_nav">Settings</string>
+    <string name="today_s_match_title">Today\'s Match</string>
+    <string name="fri_15_05_2018_10_00_pm_test">Fri 15.05.2018 10:00 PM</string>
+    <string name="vs_test">VS</string>
+    <string name="russia_test">Russia</string>
+    <string name="saudi_test">Saudi</string>
+    <string name="goals">Goals</string>
+    <string name="team_name">Team Name</string>
+    <string name="players">Players</string>
+    <string name="teams">Teams</string>
+    <string name="_1">1.</string>
+    <string name="russia">Russia</string>
+    <string name="_00">00</string>
+    <string name="round_1">Round 1</string>
+    <string name="_1_0">1 : 0</string>
+    <string name="details">Details</string>
+    <string name="saudi_arabia">Saudi Arabia</string>
+    <string name="notifications">Notifications</string>
+    <string name="notifications_on">Notifications On</string>
+    <string name="sound_on">Sound On</string>
+    <string name="vibration_on">Vibration On</string>
+    <string name="time_zone">Time Zones</string>
+    <string name="international_time_zone">International Time Zone</string>
+    <string name="bangladeshi_time_zone">Bangladeshi Time Zone</string>
+    <string name="group_a">Group A</string>
+    <string name="pts">Pts.</string>
+    <string name="gd">Gd.</string>
+    <string name="p">P.</string>
+    <string name="egypt">Egypt</string>
+    <string name="uruguay">Uruguay</string>
+    <string name="rate_apps">Rate App</string>
+    <string name="more">More</string>
+
+    <string name="about_app">The content of this app is retrieving data from the server and added to the local database. So you can browse the application even there are no internet connections. To sync the latest update of the app data you need your internet connections on. This app will notify you twice a day for the matches of the current day.  If anything seems wrong with this app please let me know. I would be very thankful for that. \nIf you like the app, do not forget to rate it, and give your valuable review.</string>
+
+    <string name="user_guide">The first time you need to open your internet connection to sync data. Then you can see all the data in offline mode. You can also control the notification, notification sound and vibration as well from the settings. The user can choose the time zone from time zones in the settings where two time zones are available. In order to get updated data, you need to keep your data connection on. Users can select their favorite teams from the Team Selection in Settings and the match schedule of these teams will appear in your teams fragment.</string>
+    <string name="team_select_notice">No teams is selected!!\n\nYou need to go to the Settings and select your teams to appear here.</string>
+
+    <!--Admob ad ids-->
+    <string name="mainscreen_banner_ad_unit_id">ca-app-pub-5088007008889420/7498379790</string>
+    <string name="grouplist_banner_ad_unit_id">ca-app-pub-5088007008889420/4405312599</string>
+    <string name="groupdetail_square_ad_unit_id">ca-app-pub-5088007008889420/5882045799</string>
+    <string name="group_back_interstitial_ad_unit_id">ca-app-pub-5088007008889420/7358778997</string>
+    <string name="matches_interstitial_ad_unit_id">ca-app-pub-5088007008889420/5863467948</string>
+    <string name="matches_list_banner_ad_unit_id">ca-app-pub-5088007008889420/8910812423</string>
+    <string name="news_list_native_ad_unit_id">ca-app-pub-5088007008889420/3342613360</string>
+    <string name="stadium_list_banner_ad_unit_id">ca-app-pub-5088007008889420/2788978590</string>
+    <string name="stadium_detail_square_ad_unit_id">ca-app-pub-5088007008889420/4265711798</string>
+    <string name="mascot_detail_square_ad_unit_id">ca-app-pub-5088007008889420/5742444990</string>
+    <string name="past_winners_list_banner_ad_unit_id">ca-app-pub-5088007008889420/7219178195</string>
+    <string name="past_winner_detail_square_ad_unit_id">ca-app-pub-5088007008889420/2649377797</string>
+    <string name="browser_banner_ad_unit_id">ca-app-pub-5088007008889420/8842185390</string>
+    <string name="browser_back_interstital_ad_unit_id">ca-app-pub-5088007008889420/1318918599</string>
+</resources>

@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/standard_padding"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin">
+
+            <include layout="@layout/past_winner_detail_constraint" />
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:layout_marginTop="@dimen/standard_padding"
+            android:background="@color/colorTransparent"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/title_host"
+            android:textColor="@color/color_white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/standard_padding"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/standard_padding">
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/host_left_guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="8dp" />
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/host_top_guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="8dp" />
+
+                <ImageView
+                    android:id="@+id/image_host_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_host_country"
+                    android:tint="@color/colorPrimary"
+                    app:layout_constraintLeft_toRightOf="@+id/host_left_guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/host_top_guideline" />
+
+                <TextView
+                    android:id="@+id/label_host_country_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/standard_padding"
+                    android:text="@string/title_host_country"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_host_country"
+                    app:layout_constraintLeft_toRightOf="@+id/image_host_country"
+                    app:layout_constraintTop_toTopOf="@+id/image_host_country" />
+
+                <TextView
+                    android:id="@+id/txt_host_country_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/standard_padding"
+                    android:paddingLeft="@dimen/standard_padding"
+                    android:text="Brazil"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/label_host_country_name"
+                    app:layout_constraintLeft_toRightOf="@+id/label_host_country_name"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/label_host_country_name" />
+
+                <ImageView
+                    android:id="@+id/image_host_stadium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/standard_padding"
+                    android:src="@drawable/ic_host_stadium"
+                    android:tint="@color/colorPrimary"
+                    app:layout_constraintLeft_toLeftOf="@+id/image_host_country"
+                    app:layout_constraintRight_toRightOf="@+id/image_host_country"
+                    app:layout_constraintTop_toBottomOf="@+id/image_host_country" />
+
+                <TextView
+                    android:id="@+id/label_host_stadium_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/standard_padding"
+                    android:text="@string/title_host_stadium"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_host_stadium"
+                    app:layout_constraintLeft_toRightOf="@+id/image_host_stadium"
+                    app:layout_constraintTop_toTopOf="@+id/image_host_stadium" />
+
+                <TextView
+                    android:id="@+id/txt_host_stadium_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/standard_padding"
+                    android:paddingLeft="@dimen/standard_padding"
+                    android:text="Brazil"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/label_host_stadium_name"
+                    app:layout_constraintLeft_toRightOf="@+id/label_host_stadium_name"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/label_host_stadium_name" />
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/stadium_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:layout_marginTop="@dimen/standard_padding"
+            android:background="@color/colorTransparent"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/title_scorers"
+            android:textColor="@color/color_white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/standard_padding"
+                android:paddingRight="@dimen/standard_padding"
+                android:paddingTop="@dimen/standard_padding">
+
+                <LinearLayout
+                    android:id="@+id/ll_golden_ball"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/standard_padding"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/image_golden_ball"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_golden_ball"
+                        android:tint="@color/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lbl_golden_ball"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/standard_padding"
+                            android:paddingLeft="@dimen/standard_padding"
+                            android:text="@string/label_golden_ball"
+                            android:textSize="@dimen/text_size"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/txt_golden_ball_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/standard_padding"
+                            android:paddingLeft="@dimen/standard_padding"
+                            android:text="Brazil"
+                            android:textColor="@color/color_black"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_golden_boot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/standard_padding"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/image_golden_boot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_action_golden_boot"
+                        android:tint="@color/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lbl_golden_boot_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/standard_padding"
+                            android:paddingLeft="@dimen/standard_padding"
+                            android:text="@string/label_golden_boot"
+                            android:textSize="@dimen/text_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_golden_boot_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/standard_padding"
+                            android:paddingLeft="@dimen/standard_padding"
+                            android:text="Brazil"
+                            android:textColor="@color/color_black"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_golden_glove"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/image_golden_glove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_action_gloves"
+                        android:tint="@color/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lbl_golden_glove_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/standard_padding"
+                            android:paddingLeft="@dimen/standard_padding"
+                            android:text="Brazil"
+                            android:textSize="@dimen/text_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_golden_glove_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/standard_padding"
+                            android:paddingLeft="@dimen/standard_padding"
+                            android:text="Brazil"
+                            android:textColor="@color/color_black"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!--        <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/standard_padding">
+
+
+                        <android.support.constraint.Guideline
+                            android:id="@+id/l_guideline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="8dp" />
+
+                        <android.support.constraint.Guideline
+                            android:id="@+id/t_guideline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:layout_constraintGuide_begin="8dp" />
+
+                        <android.support.constraint.Guideline
+                            android:id="@+id/scorer_end_guideline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.50" />
+
+                        <ImageView
+                            android:id="@+id/image_golden_ball"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_action_speaker"
+                            android:tint="@color/colorPrimary"
+                            app:layout_constraintLeft_toRightOf="@+id/l_guideline"
+                            app:layout_constraintTop_toBottomOf="@+id/t_guideline" />
+
+                        <TextView
+                            android:id="@+id/txt_golden_ball_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/standard_padding"
+                            android:paddingLeft="@dimen/standard_padding"
+                            android:text="Brazil"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/image_golden_ball"
+                            app:layout_constraintLeft_toRightOf="@+id/image_golden_ball"
+                            app:layout_constraintTop_toTopOf="@+id/image_golden_ball"
+                            app:layout_constraintRight_toLeftOf="@+id/image_golden_boot"
+                            android:layout_marginRight="@dimen/standard_padding" />
+
+                        <ImageView
+                            android:id="@+id/image_golden_boot"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_action_speaker"
+                            android:tint="@color/colorPrimary"
+                            app:layout_constraintLeft_toLeftOf="@+id/scorer_end_guideline"
+                            app:layout_constraintTop_toTopOf="@+id/t_guideline" />
+
+                        <TextView
+                            android:id="@+id/txt_golden_boot_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/standard_padding"
+                            android:paddingLeft="@dimen/standard_padding"
+                            android:text="Brazil"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/image_golden_boot"
+                            app:layout_constraintLeft_toRightOf="@+id/image_golden_boot"
+                            app:layout_constraintTop_toTopOf="@+id/image_golden_boot"
+                            android:layout_marginRight="@dimen/standard_padding"
+                            app:layout_constraintRight_toRightOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/image_golden_glove"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/standard_padding"
+                            android:src="@drawable/ic_action_speaker"
+                            android:tint="@color/colorPrimary"
+                            app:layout_constraintLeft_toLeftOf="@+id/image_golden_ball"
+                            app:layout_constraintRight_toRightOf="@+id/image_golden_ball"
+                            app:layout_constraintTop_toBottomOf="@+id/image_golden_boot" />
+
+                        <TextView
+                            android:id="@+id/txt_golden_glove_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/standard_padding"
+                            android:paddingLeft="@dimen/standard_padding"
+                            android:text="Brazil"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/image_golden_glove"
+                            app:layout_constraintLeft_toRightOf="@+id/image_golden_glove"
+                            app:layout_constraintTop_toTopOf="@+id/image_golden_glove"
+                            app:layout_constraintRight_toLeftOf="@+id/scorer_end_guideline"
+                            android:layout_marginRight="@dimen/standard_padding" />
+
+                    </android.support.constraint.ConstraintLayout>-->
+
+        </android.support.v7.widget.CardView>
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            ads:adSize="MEDIUM_RECTANGLE"
+            ads:adUnitId="@string/past_winner_detail_square_ad_unit_id"/>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

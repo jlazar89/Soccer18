@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_grey_50">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp">
+
+        <TextView
+            android:id="@+id/NotificationsSecTitleTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/notifications"
+            android:textColor="@color/md_grey_700"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        <View
+            android:id="@+id/View1"
+            android:layout_below="@id/NotificationsSecTitleTV"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/md_grey_300"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="10dp"/>
+
+        <ImageView
+            android:id="@+id/NotificationsImgView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/View1"
+            android:src="@drawable/ic_action_notifications"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            tools:ignore="ContentDescription" />
+
+        <Switch
+            android:id="@+id/switchNotifications"
+            android:layout_below="@id/View1"
+            android:layout_toRightOf="@id/NotificationsImgView"
+            android:layout_toEndOf="@id/NotificationsImgView"
+            android:layout_alignBottom="@id/NotificationsImgView"
+            android:layout_alignTop="@id/NotificationsImgView"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/notifications_on"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"/>
+
+        <ImageView
+            android:id="@+id/SoundImgView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/NotificationsImgView"
+            android:src="@drawable/ic_action_sound"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            tools:ignore="ContentDescription" />
+
+        <Switch
+            android:id="@+id/switchSound"
+            android:layout_below="@id/switchNotifications"
+            android:layout_toRightOf="@id/SoundImgView"
+            android:layout_toEndOf="@id/SoundImgView"
+            android:layout_alignBottom="@id/SoundImgView"
+            android:layout_alignTop="@id/SoundImgView"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sound_on"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"/>
+
+        <ImageView
+            android:id="@+id/VibrationImgView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/SoundImgView"
+            android:src="@drawable/ic_action_vibration"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            tools:ignore="ContentDescription" />
+
+        <Switch
+            android:id="@+id/switchVibration"
+            android:layout_below="@id/switchSound"
+            android:layout_toRightOf="@id/VibrationImgView"
+            android:layout_toEndOf="@id/VibrationImgView"
+            android:layout_alignBottom="@id/VibrationImgView"
+            android:layout_alignTop="@id/VibrationImgView"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vibration_on"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:id="@+id/TimeZoneSecTitleTV"
+            android:layout_below="@id/VibrationImgView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/time_zone"
+            android:textColor="@color/md_grey_700"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:visibility="gone"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        <View
+            android:id="@+id/View2"
+            android:layout_below="@id/TimeZoneSecTitleTV"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/md_grey_300"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="10dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_below="@id/View2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RadioButton
+                android:id="@+id/RadioButtonInternational"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="@string/international_time_zone"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#000000"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"/>
+
+            <RadioButton
+                android:id="@+id/RadioButtonBangladesh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="@string/bangladeshi_time_zone"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#000000"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"/>
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/TeamsSecTitleTV"
+            android:layout_below="@id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Team Selection"
+            android:textColor="@color/md_grey_700"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        <View
+            android:id="@+id/View3"
+            android:layout_below="@id/TeamsSecTitleTV"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/md_grey_300"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="10dp"/>
+
+        <RelativeLayout
+            android:id="@+id/RLTeamSelection"
+            android:layout_below="@id/View3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/TeamSelectionImgView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_people"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/TeamChooserTextView"
+                android:layout_toRightOf="@id/TeamSelectionImgView"
+                android:layout_toEndOf="@id/TeamSelectionImgView"
+                android:layout_alignBottom="@id/TeamSelectionImgView"
+                android:layout_alignTop="@id/TeamSelectionImgView"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose Your Teams"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

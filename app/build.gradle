@@ -1,0 +1,88 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'wc2018'
+            keyPassword 'Insanity619'
+            storeFile file('H:/Android_Stuff/Released APps/3 Wc2018/keystore/wc2018.jks')
+            storePassword 'Insanity619'
+        }
+    }
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+    defaultConfig {
+        applicationId "com.bluetag.wc"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 10
+        versionName "1.9"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            debuggable true
+           // minifyEnabled true
+           // shrinkResources true
+           // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+           // signingConfig signingConfigs.config
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    //cardview
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    testImplementation 'junit:junit:4.12'
+    // retrofit, gson
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.2.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.2.0'
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    //butterknife
+    implementation 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    //image zoom
+    implementation 'com.commit451:PhotoView:1.2.4'
+    //KenBurnsView
+    implementation 'com.flaviofaria:kenburnsview:1.0.7'
+    //Timelineview
+    implementation 'com.github.vipulasri:timelineview:1.0.5'
+    //palette
+    implementation 'com.android.support:palette-v7:27.1.1'
+    //evernote android job
+    implementation 'com.evernote:android-job:1.2.6'
+    //admob
+    implementation 'com.google.firebase:firebase-ads:15.0.0'
+    //Volley
+    implementation 'com.android.volley:volley:1.0.0'
+    //circleImageVIew
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    //Firebase real time database
+    implementation 'com.google.firebase:firebase-database:16.0.1'
+}
+
+apply plugin: 'com.google.gms.google-services'

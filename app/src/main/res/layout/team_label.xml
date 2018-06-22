@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="35.0dip"
+        android:background="#ffefefef" >
+
+        <ImageView
+            android:layout_width="50.0dip"
+            android:layout_height="fill_parent"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:gravity="center_vertical"
+            android:text="Team"
+            android:textColor="#ff000000"
+            android:textSize="16.0sp"
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/team_label_textview"
+            android:text="MP" />
+
+        <TextView
+            style="@style/team_label_textview"
+            android:text="W" />
+
+        <TextView
+            style="@style/team_label_textview"
+            android:text="D" />
+
+        <TextView
+            style="@style/team_label_textview"
+            android:text="L" />
+
+        <TextView
+            style="@style/team_label_textview"
+            android:text="GF" />
+
+        <TextView
+            style="@style/team_label_textview"
+            android:text="GA" />
+
+        <TextView
+            style="@style/team_label_textview"
+            android:text="Pts" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:background="#ffcccccc" />
+
+</LinearLayout>

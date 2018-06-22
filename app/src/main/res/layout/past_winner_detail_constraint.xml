@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/standard_padding">
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/left_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="8dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/top_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="8dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/end_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96" />
+
+    <TextView
+        android:id="@+id/year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotation="90"
+        android:text="2014"
+
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size"
+        app:layout_constraintLeft_toRightOf="@+id/left_guideline"
+        app:layout_constraintTop_toTopOf="@+id/winner_team_image"
+        app:layout_constraintBottom_toTopOf="@+id/winner_team_name" />
+
+    <ImageView
+        android:id="@+id/winner_team_image"
+        android:layout_width="@dimen/past_winner_detail_recycler_image_size"
+        android:layout_height="@dimen/past_winner_detail_recycler_image_size"
+        android:contentDescription="@string/action_settings"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_placeholder"
+        app:layout_constraintLeft_toRightOf="@+id/year"
+        app:layout_constraintTop_toBottomOf="@+id/top_guideline"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Germany"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size"
+        android:layout_below="@+id/winner_team_image"
+        app:layout_constraintTop_toBottomOf="@+id/winner_team_image"
+        app:layout_constraintLeft_toLeftOf="@+id/winner_team_image"
+        app:layout_constraintRight_toRightOf="@+id/winner_team_image"
+        android:id="@+id/winner_team_name" />
+
+    <ImageView
+        android:id="@+id/runner_up_team_image"
+        android:layout_width="@dimen/past_winner_detail_recycler_image_size"
+        android:layout_height="@dimen/past_winner_detail_recycler_image_size"
+        android:contentDescription="@string/action_settings"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_placeholder"
+        app:layout_constraintRight_toLeftOf="@+id/end_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/top_guideline"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Argentina"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size"
+        android:layout_below="@+id/runner_up_team_image"
+        app:layout_constraintTop_toBottomOf="@+id/runner_up_team_image"
+        app:layout_constraintLeft_toLeftOf="@+id/runner_up_team_image"
+        app:layout_constraintRight_toRightOf="@+id/runner_up_team_image"
+        android:id="@+id/runner_up_team_name" />
+
+    <TextView
+        android:id="@+id/label_final_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Final Score"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/colorSecondary"
+        app:layout_constraintLeft_toRightOf="@+id/winner_team_image"
+        app:layout_constraintRight_toLeftOf="@+id/runner_up_team_image"
+        app:layout_constraintTop_toTopOf="@+id/winner_team_image"
+        app:layout_constraintBottom_toTopOf="@+id/winner_team_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3-1"
+        android:textSize="@dimen/score_text_size"
+        app:layout_constraintRight_toRightOf="@+id/label_final_score"
+        app:layout_constraintLeft_toLeftOf="@+id/label_final_score"
+        app:layout_constraintTop_toBottomOf="@+id/label_final_score"
+        android:id="@+id/txt_final_score" />
+</android.support.constraint.ConstraintLayout>
