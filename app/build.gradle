@@ -21,7 +21,7 @@ android {
     }
     buildTypes {
         release {
-            debuggable false
+            debuggable true
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -82,7 +82,11 @@ dependencies {
     //circleImageVIew
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     //Firebase real time database
-    implementation 'com.google.firebase:firebase-database:16.0.1'
+    implementation 'com.google.firebase:firebase-database:15.0.0'
+    //Firebase Analytics
+    implementation 'com.google.firebase:firebase-core:15.0.0'
+    //Fcm
+    implementation 'com.google.firebase:firebase-messaging:15.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
