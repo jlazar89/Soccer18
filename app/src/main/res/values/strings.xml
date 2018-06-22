@@ -135,4 +135,7 @@
     <string name="past_winner_detail_square_ad_unit_id">ca-app-pub-5088007008889420/2649377797</string>
     <string name="browser_banner_ad_unit_id">ca-app-pub-5088007008889420/8842185390</string>
     <string name="browser_back_interstital_ad_unit_id">ca-app-pub-5088007008889420/1318918599</string>
+
+    <!--FCM-->
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 </resources>
