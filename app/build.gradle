@@ -15,13 +15,13 @@ android {
         applicationId "com.bluetag.wc"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 10
-        versionName "1.9"
+        versionCode 12
+        versionName "2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            debuggable true
+            debuggable false
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -87,6 +87,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.1'
     //Fcm
     implementation 'com.google.firebase:firebase-messaging:17.0.0'
+    //Firebase Job Dispatcher
+    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
 }
 
 apply plugin: 'com.google.gms.google-services'

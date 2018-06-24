@@ -43,7 +43,6 @@ public class Constants {
         }
     }
 
-
     public class DB{
         public static final String DB_NAME = "russiaworldcup.db";
         public static final int DB_VERSION = 2;
@@ -120,5 +119,24 @@ public class Constants {
                 "( " + MY_TEAM_NAME + " TEXT PRIMARY KEY);";
 
         public static final String DROP_MY_TEAMS_TABLE = "DROP TABLE IF EXISTS " + MY_TEAMS_TABLE;
+    }
+
+    public class FCM{
+        // global topic to receive app wide push notifications
+        public static final String TOPIC_GLOBAL = "global";
+
+        //Match url
+        public static final String MATCH_URL= "matchurl";
+
+        // broadcast receiver intent filters
+        public static final String REGISTRATION_COMPLETE = "registrationComplete";
+        public static final String PUSH_NOTIFICATION = "pushNotification";
+
+        // id to handle the notification in the notification tray
+        int num = (int) System.currentTimeMillis();
+        //public static final int NOTIFICATION_ID =  int num = (int) System.currentTimeMillis();(int) System.currentTimeMillis();;
+        //public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
+
+        public static final String SHARED_PREF = "ah_firebase";
     }
 }

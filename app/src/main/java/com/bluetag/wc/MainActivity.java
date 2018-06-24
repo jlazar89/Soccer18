@@ -1,11 +1,16 @@
 package com.bluetag.wc;
 
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.CoordinatorLayout;
@@ -17,9 +22,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bluetag.wc.activities.BrowserActivity;
 import com.bluetag.wc.activities.GroupListActivity;
 import com.bluetag.wc.activities.MascotActivity;
@@ -35,14 +49,20 @@ import com.bluetag.wc.jobs.DemoSyncJob;
 import com.bluetag.wc.model.MainScreenModel;
 import com.bluetag.wc.utils.AutoFitGridLayoutManager;
 import com.bluetag.wc.utils.NotificationReceiver;
+import com.bluetag.wc.utils.NotificationUtils;
 import com.bluetag.wc.utils.Utils;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,6 +73,7 @@ import static com.bluetag.wc.utils.Constants.BundleKeys.KEY_FEED_URl;
 import static com.bluetag.wc.utils.Constants.BundleKeys.RssItems.RSS_FOR_NEWS;
 import static com.bluetag.wc.utils.Constants.BundleKeys.RssItems.RSS_FOR_PHOTOS;
 import static com.bluetag.wc.utils.Constants.BundleKeys.RssItems.RSS_FOR_VIDEOS;
+import static com.bluetag.wc.utils.Constants.FCM.SHARED_PREF;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MainScreenAdapter.ItemListener {
@@ -70,12 +91,42 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
 
+    //Firebase Analytics
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     private String liveUrl;
+
+    static String MATCHES_LINK = "https://jlazar89.github.io/json/matches.json";
+    static boolean noData;
+    DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            String channelId = getString(R.string.default_notification_channel_id);
+            String channelName = getString(R.string.default_notification_channel_name);
+            NotificationManager notificationManager =
+                    getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(new NotificationChannel(channelId,
+                    channelName, NotificationManager.IMPORTANCE_DEFAULT));
+        }
+
+        // [END handle_data_extras]
+
+        //Firebase Analytics
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, MainActivity.class.getSimpleName());
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+        dbHelper = new DatabaseHelper(MainActivity.this);
+        noData = dbHelper.retrieveMatchesData().getCount() == 0;
+        retrieveDataFromJson();
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_content);
 
@@ -86,8 +137,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DemoSyncJob.schedulePeriodic();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            DemoSyncJob.schedulePeriodic();
 
+            // Fire off an intent to check if a TTS engine is installed
+            Intent checkIntent = new Intent();
+            checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+            startActivityForResult(checkIntent, CHECK_TTS);
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -96,12 +153,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-        // Fire off an intent to check if a TTS engine is installed
-        Intent checkIntent = new Intent();
-        checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
-        startActivityForResult(checkIntent, CHECK_TTS);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_list);
         arrayList = new ArrayList();
@@ -148,8 +199,10 @@ public class MainActivity extends AppCompatActivity
         //GridLayoutManager manager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         //recyclerView.setLayoutManager(manager);
 
+        //Real  time Database
+        mFirebaseInstance = FirebaseDatabase.getInstance();
         // get reference to 'live_match' node
-        mFirebaseDatabase = mFirebaseInstance.getReference("live_match");
+        mFirebaseDatabase = mFirebaseInstance.getReference("worldcup-soccer-2018");
 
         //// store app title to 'app_title' node
         //mFirebaseInstance.getReference("app_title").setValue("Realtime Database");
@@ -158,7 +211,7 @@ public class MainActivity extends AppCompatActivity
         mFirebaseInstance.getReference("live_match").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.e(TAG, "App title updated");
+                Log.e(TAG, "Match Url updated");
 
                 liveUrl = dataSnapshot.getValue(String.class);
             }
@@ -170,11 +223,33 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
 
         setNotification();
+
+        // If a notification message is tapped, any data accompanying the notification
+        // message is available in the intent extras. In this sample the launcher
+        // intent is fired when the notification is tapped, so any accompanying data would
+        // be handled here. If you want a different intent fired, set the click_action
+        // field of the notification message to the desired intent. The launcher intent
+        // is used when no click_action is specified.
+        //
+        // Handle possible data accompanying notification message.
+        // [START handle_data_extras]
+        if (getIntent().getExtras() != null) {
+            if(getIntent().getStringExtra(BUNDLE_KEY_DETAIL_URL)!=null){
+                liveUrl = getIntent().getStringExtra(BUNDLE_KEY_DETAIL_URL);
+                Intent i = new Intent(MainActivity.this, BrowserActivity.class);
+                i.putExtra(BUNDLE_KEY_DETAIL_URL, liveUrl);
+                i.putExtra(BUNDLE_KEY_LIVE_SCORE, true);
+                startActivity(i);
+            }
+        }
     }
 
-    private void setNotification () {
+    private void setNotification() {
         boolean alarmActive = (PendingIntent.getBroadcast(
                 this,
                 100,
@@ -188,7 +263,7 @@ public class MainActivity extends AppCompatActivity
             Calendar calendar = Calendar.getInstance();
             //calendar.setTimeInMillis(System.currentTimeMillis());
             //calendar.set(Calendar.HOUR_OF_DAY, 1);
-            calendar.set(Calendar.MINUTE, min+2);
+            calendar.set(Calendar.MINUTE, min + 2);
             //calendar.set(Calendar.SECOND, 30);
 
             Intent intent = new Intent(this, NotificationReceiver.class);
@@ -207,12 +282,93 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    // FUNCTION FOR RETRIEVE JSON DATA USING VOLLEY
+    private void retrieveDataFromJson() {
+        final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage("Loading data....");
+        progressDialog.setCancelable(false);
+        //progressDialog.show();
+        //ProgressBar progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyle);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, MATCHES_LINK,
+
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        progressDialog.dismiss();
+
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject object = (JSONObject) jsonArray.get(i);
+                                String id = object.getString("id");
+                                String date = object.getString("date");
+                                String round = object.getString("round");
+                                String team1 = object.getString("team1");
+                                String team2 = object.getString("team2");
+                                String score = object.getString("score");
+                                String details = object.getString("details");
+                                //v2
+                                String status = object.getString("status");
+                                if (noData) {
+                                    saveMatchesData(id, date, round, team1, team2, score, details, status);
+                                } else {
+                                    updateMatchesData(id, date, round, team1, team2, score, details, status);
+                                }
+                            }
+
+                            //populateRecyclerViewFromDB();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            // Toast.makeText(getContext(), "Exception arises!!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Log.i("ERROR", error.getMessage());
+                    }
+                });
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+        requestQueue.add(stringRequest);
+    }
+
+    // Fetches reg id from shared preferences
+    // and displays on the screen
+    private void displayFirebaseRegId() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(SHARED_PREF, 0);
+        String regId = pref.getString("regId", null);
+
+        Log.e(TAG, "Firebase reg id: " + regId);
+    }
+
 
     @Override
     protected void onResume() {
         super.onResume();
         if (animationDrawable != null && !animationDrawable.isRunning())
             animationDrawable.start();
+
+        // register GCM registration complete receiver
+        // LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+        //         new IntentFilter(REGISTRATION_COMPLETE));
+
+        // // register new push message receiver
+        // // by doing this, the activity will be notified each time a new message arrives
+        // LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+        //         new IntentFilter(PUSH_NOTIFICATION));
+
+        // clear the notification area when the app is opened
+        NotificationUtils.clearNotifications(getApplicationContext());
     }
 
     @Override
@@ -232,27 +388,19 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-//   @Override
-//   public boolean onCreateOptionsMenu(Menu menu) {
-//       // Inflate the menu; this adds items to the action bar if it is present.
-//      // getMenuInflater().inflate(R.menu.main, menu);
-//       return true;
-//   }
+    private void saveMatchesData(String id, String date, String round, String team1, String team2, String score, String details, String status) {
+        boolean added = dbHelper.insertMatchesData(id, date, round, team1, team2, score, details, status);
+        if (!added) {
+            Toast.makeText(MainActivity.this, "Data can't be added!!", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-//   @Override
-//   public boolean onOptionsItemSelected(MenuItem item) {
-//       // Handle action bar item clicks here. The action bar will
-//       // automatically handle clicks on the Home/Up button, so long
-//       // as you specify a parent activity in AndroidManifest.xml.
-//       int id = item.getItemId();
-
-//       //noinspection SimplifiableIfStatement
-//       if (id == R.id.action_settings) {
-//           return true;
-//       }
-
-//       return super.onOptionsItemSelected(item);
-//   }
+    private void updateMatchesData(String id, String date, String round, String team1, String team2, String score, String details, String status) {
+        boolean updated = dbHelper.updateMatchesData(id, date, round, team1, team2, score, details, status);
+        if (!updated) {
+            Toast.makeText(MainActivity.this, "Doesn't updated!", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -285,7 +433,7 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("market://search?q=pub:BlueTag"));
                 startActivity(intent);
-            }else if(id==R.id.nav_settings){
+            } else if (id == R.id.nav_settings) {
                 SettingsFragment fragment = new SettingsFragment();
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -297,7 +445,7 @@ public class MainActivity extends AppCompatActivity
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
 
-            }else if(id==R.id.nav_your_teams){
+            } else if (id == R.id.nav_your_teams) {
                 YourTeamsFragment fragment = new YourTeamsFragment();
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -367,10 +515,12 @@ public class MainActivity extends AppCompatActivity
                 startActivity(i);
             }//livescore
             else if (item.text.equals(getString(R.string.menu_live_scores))) {
-                Intent i = new Intent(MainActivity.this, BrowserActivity.class);
-                i.putExtra(BUNDLE_KEY_DETAIL_URL, liveUrl);
-                i.putExtra(BUNDLE_KEY_LIVE_SCORE, true);
-                startActivity(i);
+                if (!TextUtils.isEmpty(liveUrl)) {
+                    Intent i = new Intent(MainActivity.this, BrowserActivity.class);
+                    i.putExtra(BUNDLE_KEY_DETAIL_URL, liveUrl);
+                    i.putExtra(BUNDLE_KEY_LIVE_SCORE, true);
+                    startActivity(i);
+                }
             }
         } else {
             Utils.showSnackBar(coordinatorLayout, getResources().getString(R.string.no_internet_connection));

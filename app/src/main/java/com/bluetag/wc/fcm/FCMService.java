@@ -5,21 +5,33 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.bluetag.wc.MainActivity;
 import com.bluetag.wc.R;
 import com.bluetag.wc.activities.BrowserActivity;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.bluetag.wc.utils.NotificationUtils;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-public class FCMService extends FirebaseMessagingService {
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    private static final String TAG = "MyFirebaseMsgService";
+import static com.bluetag.wc.utils.Constants.BundleKeys.BUNDLE_KEY_DETAIL_URL;
+import static com.bluetag.wc.utils.Constants.BundleKeys.BUNDLE_KEY_LIVE_SCORE;
+import static com.bluetag.wc.utils.Constants.FCM.MATCH_URL;
+
+public class FCMService  extends FirebaseMessagingService {
+
+    private static final String TAG = FCMService.class.getSimpleName();
+
+    private NotificationUtils notificationUtils;
 
     /**
      * Called when message is received.
@@ -45,57 +57,108 @@ public class FCMService extends FirebaseMessagingService {
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
 
-           // if (/* Check if data needs to be processed by long running job */ true) {
-           //     // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
-           //     scheduleJob();
-           // } else {
-           //     // Handle message within 10 seconds
-           //     handleNow();
-           // }
-
+            try {
+                JSONObject json = new JSONObject(remoteMessage.getData().toString());
+                handleDataMessage(json);
+            } catch (Exception e) {
+                Log.e(TAG, "Exception: " + e.getMessage());
+            }
         }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            sendNotification(remoteMessage.getNotification().getBody());
+            sendNotification(remoteMessage);
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
+
     }
     // [END receive_message]
 
-    /**
-     * Schedule a job using FirebaseJobDispatcher.
-     */
-   // private void scheduleJob() {
-   //     // [START dispatch_job]
-   //     FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
-   //     Job myJob = dispatcher.newJobBuilder()
-   //             .setService(MyJobService.class)
-   //             .setTag("my-job-tag")
-   //             .build();
-   //     dispatcher.schedule(myJob);
-   //     // [END dispatch_job]
-   // }
+    private void handleDataMessage(JSONObject json) {
+        Log.e(TAG, "push json: " + json.toString());
+
+        try {
+            JSONObject data = json.getJSONObject("data");
+
+            String title = data.getString("title");
+            String message = data.getString("message");
+            boolean isBackground = data.getBoolean("is_background");
+            String imageUrl = data.getString("image");
+            String timestamp = data.getString("timestamp");
+            JSONObject payload = data.getJSONObject("payload");
+
+            Log.e(TAG, "title: " + title);
+            Log.e(TAG, "message: " + message);
+            Log.e(TAG, "isBackground: " + isBackground);
+            Log.e(TAG, "payload: " + payload.toString());
+            Log.e(TAG, "imageUrl: " + imageUrl);
+            Log.e(TAG, "timestamp: " + timestamp);
+
+
+            if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
+               //// app is in foreground, broadcast the push message
+               //Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
+               //pushNotification.putExtra("message", message);
+               //LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
+
+               //// play notification sound
+               //NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+               //notificationUtils.playNotificationSound();
+            } else {
+                // app is in background, show the notification in notification tray
+                Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+                resultIntent.putExtra("message", message);
+
+                // check for image attachment
+                if (TextUtils.isEmpty(imageUrl)) {
+                    showNotificationMessage(getApplicationContext(), title, message, timestamp, resultIntent);
+                } else {
+                    // image is present, show notification with image
+                    showNotificationMessageWithBigImage(getApplicationContext(), title, message, timestamp, resultIntent, imageUrl);
+                }
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "Json Exception: " + e.getMessage());
+        } catch (Exception e) {
+            Log.e(TAG, "Exception: " + e.getMessage());
+        }
+    }
+
 
     /**
-     * Handle time allotted to BroadcastReceivers.
+     * Showing notification with text only
      */
-    private void handleNow() {
-        Log.d(TAG, "Short lived task is done.");
+    private void showNotificationMessage(Context context, String title, String message, String timeStamp, Intent intent) {
+        notificationUtils = new NotificationUtils(context);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        notificationUtils.showNotificationMessage(title, message, timeStamp, intent);
+    }
+
+    /**
+     * Showing notification with text and image
+     */
+    private void showNotificationMessageWithBigImage(Context context, String title, String message, String timeStamp, Intent intent, String imageUrl) {
+        notificationUtils = new NotificationUtils(context);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        notificationUtils.showNotificationMessage(title, message, timeStamp, intent, imageUrl);
     }
 
     /**
      * Create and show a simple notification containing the received FCM message.
      *
-     * @param messageBody FCM message body received.
      */
-    private void sendNotification(String messageBody) {
+    private void sendNotification(RemoteMessage remoteMessage) {
+        // notification icon
+        final int icon = R.drawable.ic_launcher;
+
         Intent intent = new Intent(this, BrowserActivity.class);
+        intent.putExtra(BUNDLE_KEY_DETAIL_URL, remoteMessage.getData().get(MATCH_URL));
+        intent.putExtra(BUNDLE_KEY_LIVE_SCORE, true);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -105,8 +168,9 @@ public class FCMService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.ic_notification)
-                        .setContentTitle("FCM Message")
-                        .setContentText(messageBody)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), icon))
+                        .setContentTitle(remoteMessage.getNotification().getTitle())
+                        .setContentText(remoteMessage.getNotification().getBody())
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
@@ -116,10 +180,18 @@ public class FCMService extends FirebaseMessagingService {
 
         // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId,
-                    "Channel human readable title",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            notificationManager.createNotificationChannel(channel);
+          //  NotificationChannel channel = new NotificationChannel(channelId,
+          //          "Channel human readable title",
+          //          NotificationManager.IMPORTANCE_DEFAULT);
+          //  notificationManager.createNotificationChannel(channel);
+
+            // Create channel to show notifications.
+            channelId = getString(R.string.default_notification_channel_id);
+            String channelName = getString(R.string.default_notification_channel_name);
+            notificationManager =
+                    getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(new NotificationChannel(channelId,
+                    channelName, NotificationManager.IMPORTANCE_DEFAULT));
         }
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());

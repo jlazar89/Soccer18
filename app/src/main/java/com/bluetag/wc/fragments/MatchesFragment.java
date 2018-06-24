@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -165,30 +166,45 @@ public class MatchesFragment extends Fragment {
 
 
     private void populateRecyclerViewFromDB() {
-        Cursor cursor = dbHelper.retrieveMatchesData();
-        matchesListItems.clear();
-        noData = cursor.getCount() == 0;
+        new getDBData().execute();
+    }
 
-        if (noData) {
-            tvNotice.setVisibility(View.VISIBLE);
-        } else {
-            tvNotice.setVisibility(View.INVISIBLE);
-            while (cursor.moveToNext()) {
-                String round1 = cursor.getString(2);
-                if (ROUND.equals(round1)) {
-                    String id = cursor.getString(0);
-                    String date = cursor.getString(1);
-                    String round = cursor.getString(2);
-                    String team1 = cursor.getString(3);
-                    String team2 = cursor.getString(4);
-                    String score = cursor.getString(5);
-                    String details = cursor.getString(6);
-                    //v2
-                    String status = cursor.getString(7);
-                    MatchesListItems list = new MatchesListItems(id, date, round, team1, team2, score, details,status);
-                    matchesListItems.add(list);
+    private class getDBData extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Cursor cursor = dbHelper.retrieveMatchesData();
+            matchesListItems.clear();
+            noData = cursor.getCount() == 0;
+
+            if (noData) {
+                tvNotice.setVisibility(View.VISIBLE);
+            } else {
+                tvNotice.setVisibility(View.INVISIBLE);
+                while (cursor.moveToNext()) {
+                    String round1 = cursor.getString(2);
+                    if (ROUND.equals(round1)) {
+                        String id = cursor.getString(0);
+                        String date = cursor.getString(1);
+                        String round = cursor.getString(2);
+                        String team1 = cursor.getString(3);
+                        String team2 = cursor.getString(4);
+                        String score = cursor.getString(5);
+                        String details = cursor.getString(6);
+                        //v2
+                        String status = cursor.getString(7);
+                        MatchesListItems list = new MatchesListItems(id, date, round, team1, team2, score, details,status);
+                        matchesListItems.add(list);
+                    }
                 }
+
             }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
             adapter = new RecyclerViewAdapter(matchesListItems, getContext(), "Matches");
             recyclerView.setAdapter(adapter);
         }

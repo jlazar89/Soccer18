@@ -2,7 +2,6 @@ package com.bluetag.wc.activities;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -20,18 +19,14 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.bluetag.wc.R;
 import com.bluetag.wc.WCApplication;
 import com.bluetag.wc.api.rss.converter.RssItem;
 import com.bluetag.wc.utils.Utils;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-
-import java.lang.reflect.InvocationTargetException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,7 +60,7 @@ public class BrowserActivity extends AppCompatActivity {
     private AdView mAdView;
 
     private InterstitialAd mInterstitialAd;
-    private boolean isLiveSocre;
+    private boolean isLiveScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,19 +84,19 @@ public class BrowserActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         url = getIntent().getStringExtra(BUNDLE_KEY_DETAIL_URL);
-        isLiveSocre = getIntent().getBooleanExtra(BUNDLE_KEY_LIVE_SCORE,false);
+        isLiveScore = getIntent().getBooleanExtra(BUNDLE_KEY_LIVE_SCORE, false);
 
-        if(isLiveSocre){
+        if (isLiveScore) {
             getSupportActionBar().setTitle(getString(R.string.menu_live_scores));
             refresh.setVisibility(View.VISIBLE);
             mAdView.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             getSupportActionBar().setTitle("");
         }
 
-        if(TextUtils.isEmpty(url)){
+        if (TextUtils.isEmpty(url)) {
             rssItem = (RssItem) getIntent().getSerializableExtra(BUNDLE_KEY_DETAIL_URL);
-            url= rssItem.getLink();
+            url = rssItem.getLink();
         }
 
         // if no url is passed, close the activity
@@ -111,10 +106,10 @@ public class BrowserActivity extends AppCompatActivity {
 
         initWebView();
 
-        if(Utils.isConnected(BrowserActivity.this)){
+        if (Utils.isConnected(BrowserActivity.this)) {
             webView.loadUrl(url);
-        }else{
-            Utils.showSnackBar(coordinatorLayout,getResources().getString(R.string.no_internet_connection));
+        } else {
+            Utils.showSnackBar(coordinatorLayout, getResources().getString(R.string.no_internet_connection));
         }
 
 
@@ -130,7 +125,7 @@ public class BrowserActivity extends AppCompatActivity {
         }
     }
 
-    private  void requestNewInterstitial() {
+    private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
                 //.addTestDevice("DBA681008FF649057E4250D6D754C0DD")
                 .build();
@@ -220,13 +215,15 @@ public class BrowserActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.browser, menu);
+        if (!isLiveScore) {
+            getMenuInflater().inflate(R.menu.browser, menu);
 
-        if (Utils.isBookmarked(this, webView.getUrl())) {
-            // change icon color
-            Utils.tintMenuIcon(getApplicationContext(), menu.getItem(0), R.color.colorAccent);
-        } else {
-            Utils.tintMenuIcon(getApplicationContext(), menu.getItem(0), android.R.color.white);
+            if (Utils.isBookmarked(this, webView.getUrl())) {
+                // change icon color
+                Utils.tintMenuIcon(getApplicationContext(), menu.getItem(0), R.color.colorAccent);
+            } else {
+                Utils.tintMenuIcon(getApplicationContext(), menu.getItem(0), android.R.color.white);
+            }
         }
         return true;
     }
@@ -238,20 +235,22 @@ public class BrowserActivity extends AppCompatActivity {
         // menu item 0-index is bookmark icon
 
         // enable - disable the toolbar navigation icons
-        if (!webView.canGoBack()) {
-            menu.getItem(1).setEnabled(false);
-            menu.getItem(1).getIcon().setAlpha(130);
-        } else {
-            menu.getItem(1).setEnabled(true);
-            menu.getItem(1).getIcon().setAlpha(255);
-        }
+        if (!isLiveScore) {
+            if (!webView.canGoBack()) {
+                menu.getItem(1).setEnabled(false);
+                menu.getItem(1).getIcon().setAlpha(130);
+            } else {
+                menu.getItem(1).setEnabled(true);
+                menu.getItem(1).getIcon().setAlpha(255);
+            }
 
-        if (!webView.canGoForward()) {
-            menu.getItem(2).setEnabled(false);
-            menu.getItem(2).getIcon().setAlpha(130);
-        } else {
-            menu.getItem(2).setEnabled(true);
-            menu.getItem(2).getIcon().setAlpha(255);
+            if (!webView.canGoForward()) {
+                menu.getItem(2).setEnabled(false);
+                menu.getItem(2).getIcon().setAlpha(130);
+            } else {
+                menu.getItem(2).setEnabled(true);
+                menu.getItem(2).getIcon().setAlpha(255);
+            }
         }
 
         return true;
@@ -261,33 +260,35 @@ public class BrowserActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == android.R.id.home) {
-            showInterstitial();
-            finish();
-        }
+        if (!isLiveScore) {
+            if (item.getItemId() == android.R.id.home) {
+                showInterstitial();
+                finish();
+            }
 
-        if (item.getItemId() == R.id.action_bookmark) {
-            // bookmark / unbookmark the url
-            Utils.bookmarkUrl(this, webView.getUrl());
+            if (item.getItemId() == R.id.action_bookmark) {
+                // bookmark / unbookmark the url
+                Utils.bookmarkUrl(this, webView.getUrl());
 
-            String msg = Utils.isBookmarked(this, webView.getUrl()) ?
-                    webView.getTitle() + "is Bookmarked!" :
-                    webView.getTitle() + " removed!";
-            Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout, msg, Snackbar.LENGTH_LONG);
-            snackbar.show();
+                String msg = Utils.isBookmarked(this, webView.getUrl()) ?
+                        webView.getTitle() + "is Bookmarked!" :
+                        webView.getTitle() + " removed!";
+                Snackbar snackbar = Snackbar
+                        .make(coordinatorLayout, msg, Snackbar.LENGTH_LONG);
+                snackbar.show();
 
-            // refresh the toolbar icons, so that bookmark icon color changes
-            // depending on bookmark status
-            invalidateOptionsMenu();
-        }
+                // refresh the toolbar icons, so that bookmark icon color changes
+                // depending on bookmark status
+                invalidateOptionsMenu();
+            }
 
-        if (item.getItemId() == R.id.action_back) {
-            back();
-        }
+            if (item.getItemId() == R.id.action_back) {
+                back();
+            }
 
-        if (item.getItemId() == R.id.action_forward) {
-            forward();
+            if (item.getItemId() == R.id.action_forward) {
+                forward();
+            }
         }
 
         return super.onOptionsItemSelected(item);

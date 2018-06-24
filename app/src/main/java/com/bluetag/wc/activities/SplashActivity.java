@@ -12,6 +12,10 @@ import com.bluetag.wc.R;
 
 import butterknife.ButterKnife;
 
+import static com.bluetag.wc.utils.Constants.BundleKeys.BUNDLE_KEY_DETAIL_URL;
+import static com.bluetag.wc.utils.Constants.BundleKeys.BUNDLE_KEY_LIVE_SCORE;
+import static com.bluetag.wc.utils.Constants.FCM.MATCH_URL;
+
 /**
  * Created by Jeffy on 6/17/2017.
  */
@@ -35,6 +39,11 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 intent = new Intent(mContext, MainActivity.class);
+                if (getIntent().getExtras() != null) {
+                    intent.putExtra(BUNDLE_KEY_DETAIL_URL, getIntent().getStringExtra(MATCH_URL));
+                    intent.putExtra(BUNDLE_KEY_LIVE_SCORE, true);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                }
                 startActivity(intent);
                 finish();
             }

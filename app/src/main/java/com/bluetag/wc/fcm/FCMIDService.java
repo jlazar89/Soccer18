@@ -1,11 +1,17 @@
 package com.bluetag.wc.fcm;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
-public class FCMIDService extends FirebaseInstanceIdService {
+import static com.bluetag.wc.utils.Constants.FCM.REGISTRATION_COMPLETE;
+import static com.bluetag.wc.utils.Constants.FCM.SHARED_PREF;
+
+public class FCMIDService  extends FirebaseInstanceIdService {
 
     private static final String TAG = "MyFirebaseIIDService";
 

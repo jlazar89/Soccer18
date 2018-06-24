@@ -33,7 +33,7 @@ public class DemoSyncJob extends Job {
     @Override
     @NonNull
     protected Result onRunJob(Params params) {
-        // run your job heresaddasdasdada
+        // run your job here
         fetchRss();
         return Result.SUCCESS;
     }
