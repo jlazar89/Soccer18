@@ -45,7 +45,9 @@ import com.bluetag.wc.adapter.MainScreenAdapter;
 import com.bluetag.wc.db.DatabaseHelper;
 import com.bluetag.wc.fragments.SettingsFragment;
 import com.bluetag.wc.fragments.YourTeamsFragment;
+import com.bluetag.wc.interfaces.LiveMatchCallback;
 import com.bluetag.wc.jobs.DemoSyncJob;
+import com.bluetag.wc.model.LiveMatchModel;
 import com.bluetag.wc.model.MainScreenModel;
 import com.bluetag.wc.utils.AutoFitGridLayoutManager;
 import com.bluetag.wc.utils.NotificationReceiver;
@@ -76,7 +78,7 @@ import static com.bluetag.wc.utils.Constants.BundleKeys.RssItems.RSS_FOR_VIDEOS;
 import static com.bluetag.wc.utils.Constants.FCM.SHARED_PREF;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MainScreenAdapter.ItemListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MainScreenAdapter.ItemListener, LiveMatchCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private final int CHECK_TTS = 100;
@@ -95,10 +97,15 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAnalytics mFirebaseAnalytics;
 
     private String liveUrl;
+    private String match1Details;
+    private String match2Details;
+    private String liveUrl2;
 
     static String MATCHES_LINK = "https://jlazar89.github.io/json/matches.json";
     static boolean noData;
     DatabaseHelper dbHelper;
+
+    LiveMatchModel liveMatchModel = new LiveMatchModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,6 +221,58 @@ public class MainActivity extends AppCompatActivity
                 Log.e(TAG, "Match Url updated");
 
                 liveUrl = dataSnapshot.getValue(String.class);
+                liveMatchModel.setLive_match_1_url(liveUrl);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.e(TAG, "Failed to read app title value.", error.toException());
+            }
+        });
+
+        // app_title change listener
+        mFirebaseInstance.getReference("match_1_details").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.e(TAG, "Match 1 details updated");
+
+                match1Details = dataSnapshot.getValue(String.class);
+                liveMatchModel.setMatch_1_details(match1Details);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.e(TAG, "Failed to read app title value.", error.toException());
+            }
+        });
+
+        //livematch 2
+        mFirebaseInstance.getReference("live_match_2").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.e(TAG, "Match Url updated");
+
+                liveUrl2 = dataSnapshot.getValue(String.class);
+                liveMatchModel.setLive_match_2_url(liveUrl2);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.e(TAG, "Failed to read app title value.", error.toException());
+            }
+        });
+
+        // app_title change listener
+        mFirebaseInstance.getReference("match_2_details").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.e(TAG, "Match 2 details updated");
+
+                match2Details = dataSnapshot.getValue(String.class);
+                liveMatchModel.setMatch_2_details(match2Details);
             }
 
             @Override
@@ -239,12 +298,9 @@ public class MainActivity extends AppCompatActivity
         // Handle possible data accompanying notification message.
         // [START handle_data_extras]
         if (getIntent().getExtras() != null) {
-            if(getIntent().getStringExtra(BUNDLE_KEY_DETAIL_URL)!=null){
+            if (getIntent().getStringExtra(BUNDLE_KEY_DETAIL_URL) != null) {
                 liveUrl = getIntent().getStringExtra(BUNDLE_KEY_DETAIL_URL);
-                Intent i = new Intent(MainActivity.this, BrowserActivity.class);
-                i.putExtra(BUNDLE_KEY_DETAIL_URL, liveUrl);
-                i.putExtra(BUNDLE_KEY_LIVE_SCORE, true);
-                startActivity(i);
+                openBrowserActivity(liveUrl);
             }
         }
     }
@@ -515,16 +571,30 @@ public class MainActivity extends AppCompatActivity
                 startActivity(i);
             }//livescore
             else if (item.text.equals(getString(R.string.menu_live_scores))) {
-                if (!TextUtils.isEmpty(liveUrl)) {
-                    Intent i = new Intent(MainActivity.this, BrowserActivity.class);
-                    i.putExtra(BUNDLE_KEY_DETAIL_URL, liveUrl);
-                    i.putExtra(BUNDLE_KEY_LIVE_SCORE, true);
-                    startActivity(i);
+                if (!TextUtils.isEmpty(liveUrl) && !TextUtils.isEmpty(liveUrl2)) {
+                    // Create the fragment and show it as a dialog.
+                    LiveMatchDialog newFragment = LiveMatchDialog.newInstance(liveMatchModel);
+                    newFragment.setMatchCallback(this);
+                    newFragment.show(getSupportFragmentManager(), "dialog");
+                } else if (!TextUtils.isEmpty(liveUrl)) {
+                    openBrowserActivity(liveUrl);
                 }
             }
         } else {
             Utils.showSnackBar(coordinatorLayout, getResources().getString(R.string.no_internet_connection));
         }
 
+    }
+
+    @Override
+    public void onLiveMatchSelected(String matchurl) {
+        openBrowserActivity(matchurl);
+    }
+
+    void openBrowserActivity(String url) {
+        Intent i = new Intent(MainActivity.this, BrowserActivity.class);
+        i.putExtra(BUNDLE_KEY_DETAIL_URL, url);
+        i.putExtra(BUNDLE_KEY_LIVE_SCORE, true);
+        startActivity(i);
     }
 }

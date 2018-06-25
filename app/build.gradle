@@ -15,8 +15,8 @@ android {
         applicationId "com.bluetag.wc"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 12
-        versionName "2.1"
+        versionCode 13
+        versionName "2.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

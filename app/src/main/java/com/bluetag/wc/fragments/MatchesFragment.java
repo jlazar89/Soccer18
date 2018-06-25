@@ -92,7 +92,7 @@ public class MatchesFragment extends Fragment {
         setRoundSpinnerSelection();
 
         //Round 2
-        chooserSpinner.setSelection(1);
+        //chooserSpinner.setSelection(1);
         chooserSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
