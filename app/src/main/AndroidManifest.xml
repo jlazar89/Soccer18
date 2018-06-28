@@ -139,6 +139,19 @@
             android:theme="@style/AppTheme.NoActionBar">
             />
         </activity>
+
+        <!--Highlights-->
+        <activity
+            android:name=".activities.HighLightsActivity"
+            android:label="@string/title_highlights"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".activities.YoutubePlayerActivity"
+            android:label="@string/title_highlights"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <service android:name=".utils.TTSService" >
         </service>
         <service android:name=".jobs.NotificationService"

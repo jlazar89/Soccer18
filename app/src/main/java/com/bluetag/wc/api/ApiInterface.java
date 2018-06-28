@@ -5,6 +5,7 @@ package com.bluetag.wc.api;
  */
 
 import com.bluetag.wc.model.GroupModel;
+import com.bluetag.wc.model.HighLightsModel;
 import com.bluetag.wc.model.PastWinnersModel;
 import com.bluetag.wc.model.StadiumModel;
 import com.bluetag.wc.model.TeamModel;
@@ -26,4 +27,8 @@ public interface ApiInterface {
 
     @GET("get_group_teams.php")
     Call<TeamModel> getGroupTeams(@Query("group_id") int groupId);
+
+
+    @GET("get_highlights.php")
+    Call<HighLightsModel> getHighlights();
 }

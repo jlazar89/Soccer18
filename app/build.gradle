@@ -15,8 +15,8 @@ android {
         applicationId "com.bluetag.wc"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 13
-        versionName "2.2"
+        versionCode 14
+        versionName "2.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -89,6 +89,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.0.0'
     //Firebase Job Dispatcher
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+    //Youtube Android Player API Jar dependency
+    implementation project(':YouTubeApi')
 }
 
 apply plugin: 'com.google.gms.google-services'

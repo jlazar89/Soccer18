@@ -15,6 +15,7 @@
     <string name="menu_header_groups">Groups and Schedules</string>
     <string name="menu_groups_groups">Groups</string>
     <string name="menu_live_scores">Live Scores</string>
+    <string name="menu_highlights">HighLights</string>
     <string name="menu_groups_schedules">Schedules</string>
     <string name="menu_header_extras">Extras</string>
     <string name="menu_extras_stadiums">Stadiums</string>
@@ -32,6 +33,7 @@
     <string name="country_name">Nigeria</string>
     <string name="title_stadium_list">Stadiums</string>
     <string name="title_stadium_detail">Stadium Detail</string>
+    <string name="title_highlights">Highlights</string>
     <string name="stadium_name">Name :</string>
     <string name="stadium_host_city">Host city :</string>
     <string name="stadium_location">Location :</string>
@@ -127,7 +129,9 @@
     <string name="group_back_interstitial_ad_unit_id">ca-app-pub-5088007008889420/7358778997</string>
     <string name="matches_interstitial_ad_unit_id">ca-app-pub-5088007008889420/5863467948</string>
     <string name="matches_list_banner_ad_unit_id">ca-app-pub-5088007008889420/8910812423</string>
-    <string name="news_list_native_ad_unit_id">ca-app-pub-5088007008889420/3342613360</string>
+    <string name="news_list_native_ad_unit_id">ca-app-pub-5088007008889420/3342613360</string>    <!--FCM-->
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="default_notification_channel_name" translatable="true">Global</string>
     <string name="stadium_list_banner_ad_unit_id">ca-app-pub-5088007008889420/2788978590</string>
     <string name="stadium_detail_square_ad_unit_id">ca-app-pub-5088007008889420/4265711798</string>
     <string name="mascot_detail_square_ad_unit_id">ca-app-pub-5088007008889420/5742444990</string>
@@ -136,7 +140,7 @@
     <string name="browser_banner_ad_unit_id">ca-app-pub-5088007008889420/8842185390</string>
     <string name="browser_back_interstital_ad_unit_id">ca-app-pub-5088007008889420/1318918599</string>
 
-    <!--FCM-->
-    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
-    <string name="default_notification_channel_name" translatable="true">Global</string>
+    <!--Youtube-->
+    <string name="thumbnail_image_view_desc">Youtube Video thumbnail image view</string>
+    <string name="close_player_activity">Close Player activity</string>
 </resources>

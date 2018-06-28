@@ -7,6 +7,8 @@ package com.bluetag.wc.utils;
 public class Constants {
 
     public static final int ITEMS_PER_AD = 5;
+    //youtube developer API Key
+    public static String YT_DEVELOPER_KEY = "AIzaSyAiAMgMp12aMmxuGtLRYZP9hgMBu9k4krw";
 
     public static class BundleKeys {
         public static final String BUNDLE_KEY_IMAGE_URL = "bundle_key_stadium_image_url";

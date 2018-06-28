@@ -36,6 +36,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bluetag.wc.activities.BrowserActivity;
 import com.bluetag.wc.activities.GroupListActivity;
+import com.bluetag.wc.activities.HighLightsActivity;
 import com.bluetag.wc.activities.MascotActivity;
 import com.bluetag.wc.activities.PastWinnersListActivity;
 import com.bluetag.wc.activities.RssFeedListActivity;
@@ -165,6 +166,7 @@ public class MainActivity extends AppCompatActivity
         arrayList = new ArrayList();
         arrayList.add(new MainScreenModel(getString(R.string.menu_groups_groups), R.drawable.ic_action_groups, "#09A9FF"));
         arrayList.add(new MainScreenModel(getString(R.string.menu_live_scores), R.drawable.ic_action_live_score, "#09A9FF"));
+        arrayList.add(new MainScreenModel(getString(R.string.menu_highlights), R.drawable.ic_action_highlights, "#09A9FF"));
         arrayList.add(new MainScreenModel(getString(R.string.menu_groups_schedules), R.drawable.ic_action_schedules, "#3E51B1"));
         arrayList.add(new MainScreenModel(getString(R.string.menu_media_news), R.drawable.ic_action_news, "#0A9B88"));
         arrayList.add(new MainScreenModel(getString(R.string.menu_media_photos), R.drawable.ic_action_photos, "#0A9B88"));
@@ -579,6 +581,10 @@ public class MainActivity extends AppCompatActivity
                 } else if (!TextUtils.isEmpty(liveUrl)) {
                     openBrowserActivity(liveUrl);
                 }
+            }//Highlights
+            else if (item.text.equals(getString(R.string.menu_highlights))) {
+                Intent i = new Intent(MainActivity.this, HighLightsActivity.class);
+                startActivity(i);
             }
         } else {
             Utils.showSnackBar(coordinatorLayout, getResources().getString(R.string.no_internet_connection));

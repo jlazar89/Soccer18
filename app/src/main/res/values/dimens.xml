@@ -8,6 +8,7 @@
     <dimen name="app_bar_height">400dp</dimen>
     <dimen name="item_width">300dp</dimen>
 
+    <dimen name="smaller_text_size">12sp</dimen>
     <dimen name="text_size">18sp</dimen>
     <dimen name="half_padding">4dp</dimen>
     <dimen name="standard_padding">8dp</dimen>
@@ -33,4 +34,12 @@
     <dimen name="past_winner_list_recycler_image_size">80dp</dimen>
     <dimen name="past_winner_detail_recycler_image_size">80dp</dimen>
     <dimen name="score_text_size">16sp</dimen>
+
+    <dimen name="card_margin">5dp</dimen>
+    <dimen name="card_album_radius">5dp</dimen>
+    <dimen name="album_cover_height">160dp</dimen>
+    <dimen name="album_title_padding">10dp</dimen>
+    <dimen name="album_title">15dp</dimen>
+    <dimen name="songs_count_padding_bottom">5dp</dimen>
+    <dimen name="songs_count">12dp</dimen>
 </resources>
